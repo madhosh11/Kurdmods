@@ -37,10 +37,7 @@ export default function PaymentPage() {
 
       if (result.success) {
         alert(`${result.message}\nOrder ID: ${result.orderId}`)
-        // Clear cart after successful submission
         dispatch({ type: "CLEAR_CART" })
-        // Optionally redirect to a success page
-        // router.push('/order-success')
       } else {
         alert(result.error || "There was an error submitting your order. Please try again.")
       }
@@ -53,7 +50,6 @@ export default function PaymentPage() {
   }
 
   const handlePaymentGateway = () => {
-    // This will be implemented when you provide the payment gateway details
     alert("Payment gateway integration will be added here")
   }
 
@@ -186,67 +182,20 @@ export default function PaymentPage() {
                   </div>
                 </div>
 
-                {/* QR Code Section - Using regular img tag instead of Next.js Image */}
+                {/* Simplified QR Code Section */}
                 <div className="bg-green-50 p-6 rounded-lg border-2 border-green-200">
                   <h3 className="font-semibold text-green-800 mb-4 text-center">Scan QR Code to Pay</h3>
+
                   <div className="flex justify-center mb-4">
-                    <div className="bg-white p-4 rounded-xl shadow-lg border-2 border-green-100">
-                      <img
-                        src="/QR.png"
-                        alt="Payment QR Code"
-                        width="200"
-                        height="200"
-                        className="rounded-lg"
-                        onError={(e) => {
-                          console.log("QR image failed to load from /QR.png")
-                          const img = e.target as HTMLImageElement
-                          // Try different variations
-                          if (img.src.includes("/QR.png")) {
-                            console.log("Trying /qr.png")
-                            img.src = "/qr.png"
-                          } else if (img.src.includes("/qr.png")) {
-                            console.log("Trying /QR.jpg")
-                            img.src = "/QR.jpg"
-                          } else if (img.src.includes("/QR.jpg")) {
-                            console.log("Trying /qr.jpg")
-                            img.src = "/qr.jpg"
-                          } else {
-                            console.log("All attempts failed, hiding image")
-                            img.style.display = "none"
-                            // Show error message
-                            const errorDiv = document.createElement("div")
-                            errorDiv.innerHTML = `
-              <div class="text-center p-4 bg-red-50 border border-red-200 rounded">
-                <p class="text-red-700 font-semibold">QR Code temporarily unavailable</p>
-                <p class="text-red-600 text-sm">Please use bank transfer details above</p>
-              </div>
-            `
-                            img.parentNode?.appendChild(errorDiv)
-                          }
-                        }}
-                        onLoad={() => console.log("QR image loaded successfully")}
-                        style={{ maxWidth: "200px", maxHeight: "200px" }}
-                      />
+                    <div className="bg-white p-4 rounded-xl shadow-lg">
+                      <img src="/qr-code.png" alt="Payment QR Code" className="w-48 h-48 object-contain rounded-lg" />
                     </div>
                   </div>
-                  <p className="text-sm text-green-700 text-center mb-2">
-                    <strong>Scan this QR code with your mobile wallet to complete payment</strong>
-                  </p>
-                  <div className="text-xs text-green-600 text-center space-y-1">
-                    <p>
-                      <strong>Amount:</strong> ${state.total.toFixed(2)}
-                    </p>
-                    <p>
-                      <strong>Reference:</strong> Use your order ID when it's generated
-                    </p>
-                  </div>
 
-                  {/* Fallback text if image doesn't load */}
-                  <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded text-center">
-                    <p className="text-sm text-yellow-800">
-                      <strong>If QR code doesn't appear:</strong>
-                      <br />
-                      Please use the bank transfer details above or contact us for payment assistance.
+                  <div className="text-center space-y-2">
+                    <p className="text-green-700 font-medium">Scan with your mobile wallet to pay</p>
+                    <p className="text-green-600 text-sm">
+                      Amount: <strong>${state.total.toFixed(2)}</strong>
                     </p>
                   </div>
                 </div>
