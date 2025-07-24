@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-import Image from "next/image"
 
 import { useState } from "react"
 import { useCart } from "@/contexts/cart-context"
@@ -187,31 +186,46 @@ export default function PaymentPage() {
                   </div>
                 </div>
 
-                {/* QR Code Section - Updated with error handling */}
+                {/* QR Code Section - Using regular img tag instead of Next.js Image */}
                 <div className="bg-green-50 p-6 rounded-lg border-2 border-green-200">
                   <h3 className="font-semibold text-green-800 mb-4 text-center">Scan QR Code to Pay</h3>
                   <div className="flex justify-center mb-4">
                     <div className="bg-white p-4 rounded-xl shadow-lg border-2 border-green-100">
-                      <Image
+                      <img
                         src="/QR.png"
                         alt="Payment QR Code"
-                        width={200}
-                        height={200}
+                        width="200"
+                        height="200"
                         className="rounded-lg"
-                        priority
                         onError={(e) => {
-                          console.log("QR image failed to load:", e)
-                          // Try alternative paths
+                          console.log("QR image failed to load from /QR.png")
                           const img = e.target as HTMLImageElement
+                          // Try different variations
                           if (img.src.includes("/QR.png")) {
-                            img.src = "/qr.png" // Try lowercase
+                            console.log("Trying /qr.png")
+                            img.src = "/qr.png"
                           } else if (img.src.includes("/qr.png")) {
-                            img.src = "/QR.jpg" // Try different extension
+                            console.log("Trying /QR.jpg")
+                            img.src = "/QR.jpg"
                           } else if (img.src.includes("/QR.jpg")) {
-                            img.src = "/qr.jpg" // Try lowercase jpg
+                            console.log("Trying /qr.jpg")
+                            img.src = "/qr.jpg"
+                          } else {
+                            console.log("All attempts failed, hiding image")
+                            img.style.display = "none"
+                            // Show error message
+                            const errorDiv = document.createElement("div")
+                            errorDiv.innerHTML = `
+              <div class="text-center p-4 bg-red-50 border border-red-200 rounded">
+                <p class="text-red-700 font-semibold">QR Code temporarily unavailable</p>
+                <p class="text-red-600 text-sm">Please use bank transfer details above</p>
+              </div>
+            `
+                            img.parentNode?.appendChild(errorDiv)
                           }
                         }}
                         onLoad={() => console.log("QR image loaded successfully")}
+                        style={{ maxWidth: "200px", maxHeight: "200px" }}
                       />
                     </div>
                   </div>
