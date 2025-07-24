@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import Image from "next/image"
 
 import { useState } from "react"
 import { useCart } from "@/contexts/cart-context"
@@ -168,14 +169,14 @@ export default function PaymentPage() {
                 </div>
 
                 {/* Bank Transfer Instructions */}
-                <div className="bg-blue-50 p-4 rounded-lg">
+                <div className="bg-blue-50 p-4 rounded-lg border border-blue-200 mb-4">
                   <h3 className="font-semibold text-blue-800 mb-2">Bank Transfer Instructions</h3>
                   <div className="text-sm text-blue-700 space-y-1">
                     <p>
                       <strong>Bank:</strong> Your Bank Name
                     </p>
                     <p>
-                      <strong>Account Name:</strong> Your Store Name
+                      <strong>Account Name:</strong> KurdMods Store
                     </p>
                     <p>
                       <strong>Account Number:</strong> 1234567890
@@ -186,13 +187,32 @@ export default function PaymentPage() {
                   </div>
                 </div>
 
-                {/* QR Code Placeholder */}
-                <div className="border-2 border-dashed border-gray-300 p-8 text-center">
-                  <p className="text-gray-600 mb-2">QR Code for Payment</p>
-                  <div className="w-32 h-32 bg-gray-200 mx-auto flex items-center justify-center">
-                    <span className="text-gray-500">QR Code Here</span>
+                {/* QR Code Section - Replace the placeholder */}
+                <div className="bg-green-50 p-6 rounded-lg border-2 border-green-200">
+                  <h3 className="font-semibold text-green-800 mb-4 text-center">Scan QR Code to Pay</h3>
+                  <div className="flex justify-center mb-4">
+                    <div className="bg-white p-4 rounded-xl shadow-lg border-2 border-green-100">
+                      <Image
+                        src="/payment-qr.png"
+                        alt="Payment QR Code"
+                        width={200}
+                        height={200}
+                        className="rounded-lg"
+                        priority
+                      />
+                    </div>
                   </div>
-                  <p className="text-sm text-gray-500 mt-2">Scan this QR code to complete your payment</p>
+                  <p className="text-sm text-green-700 text-center mb-2">
+                    <strong>Scan this QR code with your mobile wallet to complete payment</strong>
+                  </p>
+                  <div className="text-xs text-green-600 text-center space-y-1">
+                    <p>
+                      <strong>Amount:</strong> ${state.total.toFixed(2)}
+                    </p>
+                    <p>
+                      <strong>Reference:</strong> Use your order ID when it's generated
+                    </p>
+                  </div>
                 </div>
 
                 <div className="flex space-x-4">
