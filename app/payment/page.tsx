@@ -187,7 +187,7 @@ export default function PaymentPage() {
                   </div>
                 </div>
 
-                {/* QR Code Section - Replace the placeholder */}
+                {/* QR Code Section - Updated with error handling */}
                 <div className="bg-green-50 p-6 rounded-lg border-2 border-green-200">
                   <h3 className="font-semibold text-green-800 mb-4 text-center">Scan QR Code to Pay</h3>
                   <div className="flex justify-center mb-4">
@@ -199,6 +199,19 @@ export default function PaymentPage() {
                         height={200}
                         className="rounded-lg"
                         priority
+                        onError={(e) => {
+                          console.log("QR image failed to load:", e)
+                          // Try alternative paths
+                          const img = e.target as HTMLImageElement
+                          if (img.src.includes("/QR.png")) {
+                            img.src = "/qr.png" // Try lowercase
+                          } else if (img.src.includes("/qr.png")) {
+                            img.src = "/QR.jpg" // Try different extension
+                          } else if (img.src.includes("/QR.jpg")) {
+                            img.src = "/qr.jpg" // Try lowercase jpg
+                          }
+                        }}
+                        onLoad={() => console.log("QR image loaded successfully")}
                       />
                     </div>
                   </div>
@@ -211,6 +224,15 @@ export default function PaymentPage() {
                     </p>
                     <p>
                       <strong>Reference:</strong> Use your order ID when it's generated
+                    </p>
+                  </div>
+
+                  {/* Fallback text if image doesn't load */}
+                  <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded text-center">
+                    <p className="text-sm text-yellow-800">
+                      <strong>If QR code doesn't appear:</strong>
+                      <br />
+                      Please use the bank transfer details above or contact us for payment assistance.
                     </p>
                   </div>
                 </div>
