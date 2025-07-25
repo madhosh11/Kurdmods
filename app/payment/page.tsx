@@ -168,10 +168,10 @@ export default function PaymentPage() {
                   <h3 className="font-semibold text-blue-800 mb-2">Bank Transfer Instructions</h3>
                   <div className="text-sm text-blue-700 space-y-1">
                     <p>
-                      <strong>Bank:</strong> Your Bank Name
+                      <strong>Bank:</strong> First Iraqi Bank
                     </p>
                     <p>
-                      <strong>Account Name:</strong> KurdMods Store
+                      <strong>Account Name:</strong> Parosh Ali Hussein
                     </p>
                     <p>
                       <strong>Account Number:</strong> 1234567890
@@ -193,7 +193,7 @@ export default function PaymentPage() {
                   </div>
 
                   <div className="text-center space-y-2">
-                    <p className="text-green-700 font-medium">Scan with your mobile wallet to pay</p>
+                    <p className="text-green-700 font-medium">Scan with your FIB wallet to pay</p>
                     <p className="text-green-600 text-sm">
                       Amount: <strong>${state.total.toFixed(2)}</strong>
                     </p>
